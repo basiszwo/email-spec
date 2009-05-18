@@ -37,25 +37,46 @@ module EmailSpec
 
     alias :be_delivered_to :deliver_to
 
-    def have_subject(expected)
-      simple_matcher do |given, matcher|
-        given_subject = given.subject
+    custom_matcher :have_subject do |receiver, matcher, args|
+      given_subject = receiver.subject
+      
+      # FIXME remove redundant variable definition
+      expected = args # args is an array
+      
+      if expected.is_a?(String)
+        matcher.description = "have subject of #{expected.inspect}"
+        matcher.failure_message = "expected the subject to be #{expected.inspect} but was #{given_subject.inspect}"
+        matcher.negative_failure_message = "expected the subject not to be #{expected.inspect} but was"
 
-        if expected.is_a?(String)
-          matcher.description = "have subject of #{expected.inspect}"
-          matcher.failure_message = "expected the subject to be #{expected.inspect} but was #{given_subject.inspect}"
-          matcher.negative_failure_message = "expected the subject not to be #{expected.inspect} but was"
-
-          given_subject == expected
-        else
-          matcher.description = "have subject matching #{expected.inspect}"
-          matcher.failure_message = "expected the subject to match #{expected.inspect}, but did not.  Actual subject was: #{given_subject.inspect}"
-          matcher.negative_failure_message = "expected the subject not to match #{expected.inspect} but #{given_subject.inspect} does match it."
-
-          !!(given_subject =~ expected)
-        end
+        given_subject == expected
+      else
+        matcher.description = "have subject matching #{expected.inspect}"
+        matcher.failure_message = "expected the subject to match #{expected.inspect}, but did not.  Actual subject was: #{given_subject.inspect}"
+        matcher.negative_failure_message = "expected the subject not to match #{expected.inspect} but #{given_subject.inspect} does match it."
+                
+        !!(given_subject =~ expected.first)
       end
-     end
+    end
+    
+    # def have_subject(expected)
+    #   simple_matcher do |given, matcher|
+    #     given_subject = given.subject
+    # 
+    #     if expected.is_a?(String)
+    #       matcher.description = "have subject of #{expected.inspect}"
+    #       matcher.failure_message = "expected the subject to be #{expected.inspect} but was #{given_subject.inspect}"
+    #       matcher.negative_failure_message = "expected the subject not to be #{expected.inspect} but was"
+    # 
+    #       given_subject == expected
+    #     else
+    #       matcher.description = "have subject matching #{expected.inspect}"
+    #       matcher.failure_message = "expected the subject to match #{expected.inspect}, but did not.  Actual subject was: #{given_subject.inspect}"
+    #       matcher.negative_failure_message = "expected the subject not to match #{expected.inspect} but #{given_subject.inspect} does match it."
+    # 
+    #       !!(given_subject =~ expected)
+    #     end
+    #   end
+    #  end
 
      def include_email_with_subject(expected)
        simple_matcher do |given_emails, matcher|
