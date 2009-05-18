@@ -1,6 +1,6 @@
 = Email Spec (somewhen Email Test)
 
-A collection of -RSpec- Test::Unit matchers and Cucumber steps to make testing emails go smoothly.
+A collection of (RSpec) Test::Unit matchers and Cucumber steps to make testing emails go smoothly.
 
 
 == Setup
