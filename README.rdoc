@@ -1,18 +1,22 @@
-= Email Spec
+= Email Spec (somewhen Email Test)
 
-A collection of RSpec matchers and Cucumber steps to make testing emails go smoothly.
+A collection of -RSpec- Test::Unit matchers and Cucumber steps to make testing emails go smoothly.
 
 
 == Setup
 
   script/plugin install git://github.com/bmabey/email-spec.git
 
+=== Requirements
+
+  jnunemaker-matchy for having the ability to create custom matchers and use some shipped matchers like should in Test::Unit
+
 === Gem Setup
   
-  gem install bmabey-email_spec
+  gem install basiszwo-email_spec
 
   # config/environments/test.rb
-  config.gem 'bmabey-email_spec', :lib => 'email_spec'
+  config.gem 'basiszwo-email_spec', :lib => 'email_spec'
   
 === Cucumber
 
@@ -117,6 +121,10 @@ For more examples, check out examples/rails_root in the source for a small examp
     ==== Using the helpers when not testing in isolation ==== 
 
       Don't. :)  Seriously, if you do just take a look at the helpers and use them as you wish.
+
+== Author
+
+Stefan Botzenhart
 
 == Original Authors
 
